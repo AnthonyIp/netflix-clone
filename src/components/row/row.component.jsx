@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import Youtube                      from 'react-youtube';
 import './row.scss';
 
-const RowComponent = ({title, fetchUrl, isLargeRow}) => {
+const Row = ({title, fetchUrl, isLargeRow}) => {
     const [movies, setMovies] = useState([]);
     const [trailerUrl, setTrailerUrl] = useState("");
     const base_url = 'https://image.tmdb.org/t/p/original';
@@ -31,7 +31,7 @@ const RowComponent = ({title, fetchUrl, isLargeRow}) => {
         if (trailerUrl) {
             setTrailerUrl('');
         } else {
-            movieTrailer(movie?.name || "")
+            movieTrailer(movie?.name || movie?.title || movie?.original_name || "")
                 .then(url => {
                     const urlParams = new URLSearchParams(new URL(url).search);
                     setTrailerUrl(urlParams.get('v'));
@@ -52,6 +52,7 @@ const RowComponent = ({title, fetchUrl, isLargeRow}) => {
                                       src={`${base_url}/${isLargeRow ? movie?.poster_path : movie?.backdrop_path}`}
                                       alt={movie?.title || movie?.name || movie?.original_name}
                                       onClick={() => handleTrailer(movie)}
+                                      style={{}}
                                />
 
                     })
@@ -62,4 +63,4 @@ const RowComponent = ({title, fetchUrl, isLargeRow}) => {
     );
 };
 
-export default RowComponent;
+export default Row;
